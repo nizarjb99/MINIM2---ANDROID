@@ -1,5 +1,6 @@
 package dsa.upc.edu.listapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -16,19 +17,23 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText etUsername, etPassword;
-    private Button btnLogin;
+    private Button btnLogin, btnGoToRegister;
 
     private EETACBROSSystemService system;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_login);
 
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+        btnGoToRegister = findViewById(R.id.btnGoToRegister);
+
 
         btnLogin.setOnClickListener(v -> loginUser());
+        btnGoToRegister.setOnClickListener(v -> goToRegister());
     }
 
     private void loginUser() {
@@ -43,18 +48,25 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(LoginActivity.this, "Log in correcte!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
                     finish();
-                } else {
-                    Toast.makeText(LoginActivity.this, "Error en el log in", Toast.LENGTH_SHORT).show();
+                } else if (response.code() == 404){
+                    Toast.makeText(LoginActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+                } else if (response.code() == 400) {
+                    Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
+
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "Error de connexió: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Connection error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    private void goToRegister() {
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(intent);
     }
 }

@@ -1,5 +1,6 @@
 package dsa.upc.edu.listapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -16,8 +17,8 @@ import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText etUsername, etNom, etEmail, etPassword;
-    private Button btnRegister;
+    private EditText etUsername, etName, etEmail, etPassword;
+    private Button btnRegister, btnGoToLogIn;
 
     private EETACBROSSystemService system;
 
@@ -27,18 +28,21 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         etUsername = findViewById(R.id.etUsername);
-        etNom = findViewById(R.id.etNom);
+        etName = findViewById(R.id.etName);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
-        btnRegister = findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
+        btnGoToLogIn = findViewById(R.id.btnGoToLogIn);
+
 
         btnRegister.setOnClickListener(v -> registerUser());
+        btnGoToLogIn.setOnClickListener(v -> goToLogin());
     }
 
     private void registerUser() {
         RegisterRequest request = new RegisterRequest(
                 etUsername.getText().toString(),
-                etNom.getText().toString(),
+                etName.getText().toString(),
                 etEmail.getText().toString(),
                 etPassword.getText().toString()
         );
@@ -61,6 +65,10 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this, "Error de connexió: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    private void goToLogin() {
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 }

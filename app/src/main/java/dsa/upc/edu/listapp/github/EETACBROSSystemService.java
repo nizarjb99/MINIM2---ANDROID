@@ -11,7 +11,7 @@ public interface EETACBROSSystemService {
     @POST("eetacbros/user/register")
     Call<User> registerUser(@Body RegisterRequest request);
 
-    @POST("eetacbros/user/loginUser")
+    @POST("eetacbros/user/login")
     Call<User> loginUser(@Body LoginRequest request);
 }
 

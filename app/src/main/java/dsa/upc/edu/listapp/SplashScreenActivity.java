@@ -31,16 +31,23 @@ public class SplashScreenActivity extends AppCompatActivity {
         // de login.
 
         final Handler handler = new Handler();
-        handler.postDelayed( ()->
+        handler.postDelayed(() ->
                 {
                     Intent intent = null;
-                    if(isLoggedIn)
-                    {
-                        // Hacia la tienda o el juego si ya estamos loguedos
+                    if (isLoggedIn) {
+                        goToShop();
                     }
-                    else intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                    else {
+                        intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
                 },
                 3000);
     }
+
+    private void goToShop() {
+        Intent intent = new Intent(SplashScreenActivity.this, ShopActivity.class);
+        startActivity(intent);
+    }
+
 }

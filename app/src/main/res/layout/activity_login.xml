@@ -1,56 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textAlignment="viewEnd">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/etUsername"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Usuari"
-            android:fontFamily="@font/kongtext" />
-
-        <EditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Contrasenya"
-            android:inputType="textPassword"
-            android:fontFamily="@font/kongtext" />
-
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Log in"
-            android:fontFamily="@font/kongtext" />
-
-        <TextView
-            android:id="@+id/txtRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:text="You don't have an account?"
-            android:textAlignment="gravity"
-            android:textAllCaps="false"
-            android:textColor="#80000000"
-            android:textColorLink="#000000"
-            android:textIsSelectable="false"
-            android:fontFamily="@font/kongtext" />
-
-        <Button
-            android:id="@+id/btnGoToRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Register"
-            android:fontFamily="@font/kongtext" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnGoToRegister"
+        android:layout_width="218dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="320dp"
+        android:fontFamily="@font/kongtext"
+        android:text="Register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.452"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.388" />
+
+    <TextView
+        android:id="@+id/txtRegister"
+        android:layout_width="278dp"
+        android:layout_height="40dp"
+        android:fontFamily="@font/kongtext"
+        android:text="You don't have an account yet?"
+        android:textAlignment="gravity"
+        android:textAllCaps="false"
+        android:textColor="#80000000"
+        android:textColorLink="#000000"
+        android:textIsSelectable="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.624"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.599" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/kongtext"
+        android:hint="Contrasenya"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.402"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.367" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="224dp"
+        android:layout_height="50dp"
+        android:fontFamily="@font/kongtext"
+        android:text="Log in"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.443"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.455" />
+
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/kongtext"
+        android:hint="Usuari"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.384"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.296" />
 </android.support.constraint.ConstraintLayout>

@@ -57,11 +57,21 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
-                    prefs.edit().putBoolean("isLoggedIn", true).apply();
+                    User user = response.body();
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("isLoggedIn", true);
+                    if (user != null) {
+                        editor.putInt("userId", user.id);
+                    }
+                    editor.apply();
+
                     Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
-                } else if (response.code() == 404){
+                    goToShop();
+                }
+                else if (response.code() == 404){
                     Toast.makeText(LoginActivity.this, "User not found", Toast.LENGTH_SHORT).show();
-                } else if (response.code() == 400) {
+                }
+                else if (response.code() == 400) {
                     Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -77,4 +87,11 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(intent);
     }
+
+    private void goToShop() {
+        Intent intent = new Intent(LoginActivity.this, ShopActivity.class);
+        startActivity(intent);
+    }
+
+
 }

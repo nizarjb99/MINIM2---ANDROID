@@ -24,7 +24,10 @@
             <!-- Es nuestro splash screen -->
 
         </activity>
-        <activity android:name=".RegisterActivity" />
+
+        <activity android:name=".RegisterActivity"/>
+
+        <activity android:name=".ShopActivity"/>
     </application>
 
 </manifest>

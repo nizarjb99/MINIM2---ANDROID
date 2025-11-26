@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        prefs = getSharedPreferences("EETACBORSPreferences", MODE_PRIVATE);
+        prefs = getSharedPreferences("EETACBROSPreferences", MODE_PRIVATE);
 
         if (prefs.getBoolean("isLoggedIn", false)) {
             goToShop();

@@ -19,7 +19,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        prefs = getSharedPreferences("EETACBORSPreferences", MODE_PRIVATE);
+        prefs = getSharedPreferences("EETACBROSPreferences", MODE_PRIVATE);
         isLoggedIn = prefs.getBoolean("isLoggedIn", false);
         if (isLoggedIn) {
             Toast.makeText(SplashScreenActivity.this, "Already logged in", Toast.LENGTH_SHORT).show();

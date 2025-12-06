@@ -36,20 +36,21 @@ public class ShopActivity extends AppCompatActivity {
     private EETACBROSSystemService api;
     private SharedPreferences prefs;
 
-
     // Local cart: itemId -> quantity
     private Map<Integer, Integer> cart = new HashMap<>();
 
     // List of items fetched from API
     private List<Item> shopItems = new ArrayList<>();
-    private int coins = 1000; // Initial coins
+
+    private int coins;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
 
-        prefs = getSharedPreferences("EETACBORSPreferences", MODE_PRIVATE);
+        prefs = getSharedPreferences("EETACBROSPreferences", MODE_PRIVATE);
+        coins = prefs.getInt("coins", 0);
 
         cartIcon = findViewById(R.id.cartIcon);
         logoutBtn = findViewById(R.id.logoutBtn);
@@ -71,10 +72,9 @@ public class ShopActivity extends AppCompatActivity {
     }
 
     private void logOut() {
-        SharedPreferences prefs = getSharedPreferences("EETACBROSPreferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("isLoggedIn", false);
-        editor.apply();
+        editor.commit();
 
         Intent intent = new Intent(ShopActivity.this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -243,8 +243,11 @@ public class ShopActivity extends AppCompatActivity {
         int totalCost = 0;
         for (Map.Entry<Integer, Integer> entry : cart.entrySet()) {
             Item item = findItemById(entry.getKey());
+            item.setQuantity(entry.getValue());
             if (item != null) {
-                itemsToBuy.add(item);
+                for (int i = 0; i < entry.getValue(); i++) {
+                    itemsToBuy.add(item);
+                }
                 totalCost += item.getPrice() * entry.getValue();
             }
         }
@@ -271,6 +274,10 @@ public class ShopActivity extends AppCompatActivity {
                     //Deduct coins
                     coins -= finalTotalCost;
                     updateCoinsDisplay();
+
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putInt("coins", coins);
+                    editor.commit();
 
                     // Clear cart
                     cart.clear();

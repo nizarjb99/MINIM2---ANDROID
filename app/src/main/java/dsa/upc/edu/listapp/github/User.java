@@ -3,15 +3,18 @@ package dsa.upc.edu.listapp.github;
 public class User {
     public final int id;
     public final String username;
-    public final String nom;
+    public final String name;
     public final String email;
     public final String password;
+    public final int coins;
 
-    public User(int id, String username, String nom, String email, String password) {
+
+    public User(int id, String username, String name, String email, String password, int coins) {
         this.id = id;
         this.username = username;
-        this.nom = nom;
+        this.name = name;
         this.email = email;
         this.password = password;
+        this.coins = coins;
     }
 }

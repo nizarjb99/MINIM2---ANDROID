@@ -2,8 +2,8 @@ package dsa.upc.edu.listapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -64,17 +64,21 @@ public class LoginActivity extends AppCompatActivity {
                     if (user != null) {
                         editor.putInt("userId", user.id);
                         editor.putString("username", user.username);
+                        editor.putString("name", user.name);
+                        editor.putString("email", user.email);
+                        editor.putString("password", user.password);
+                        editor.putInt("coins", user.coins);
                     }
-                    editor.apply();
+                    editor.commit();
 
-                    Toast.makeText(LoginActivity.this, "Logged in successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "✅ Login successful! Redirecting...", Toast.LENGTH_SHORT).show();
                     goToShop();
                 }
                 else if (response.code() == 404){
-                    Toast.makeText(LoginActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }
-                else if (response.code() == 400) {
-                    Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                else if (response.code() == 500) {
+                    Toast.makeText(LoginActivity.this, "Internal Server Error", Toast.LENGTH_SHORT).show();
                 }
             }
 

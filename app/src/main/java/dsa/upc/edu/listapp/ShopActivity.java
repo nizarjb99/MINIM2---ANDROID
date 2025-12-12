@@ -29,7 +29,7 @@ import retrofit2.Response;
 public class ShopActivity extends AppCompatActivity {
 
     private View cartIcon;
-    private Button checkoutBtn, logoutBtn, closeCart, clearCart;
+    private Button checkoutBtn, logoutBtn, closeCart, clearCart, profileBtn;
     private RelativeLayout cartModal;
     private TextView cartCount, coinsTextView;
 
@@ -54,6 +54,7 @@ public class ShopActivity extends AppCompatActivity {
 
         cartIcon = findViewById(R.id.cartIcon);
         logoutBtn = findViewById(R.id.logoutBtn);
+        profileBtn = findViewById(R.id.profileBtn);
         cartModal = findViewById(R.id.cartModal);
         cartCount = findViewById(R.id.cartCount);
         coinsTextView = findViewById(R.id.coins);
@@ -69,11 +70,13 @@ public class ShopActivity extends AppCompatActivity {
         cartIcon.setOnClickListener(view -> seeCartItems());
 
         logoutBtn.setOnClickListener(v -> logOut());
+        profileBtn.setOnClickListener(v -> gotToProfile());
     }
 
     private void logOut() {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("userId", -1);
+        editor.putBoolean("isLoggedIn", false);
         editor.commit();
 
         Intent intent = new Intent(ShopActivity.this, LoginActivity.class);
@@ -81,6 +84,15 @@ public class ShopActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    private void gotToProfile() {
+
+        Intent intent = new Intent(ShopActivity.this, ProfileActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+
 
     // -----------------------------
     // Load items from GET /items
@@ -243,11 +255,9 @@ public class ShopActivity extends AppCompatActivity {
         int totalCost = 0;
         for (Map.Entry<Integer, Integer> entry : cart.entrySet()) {
             Item item = findItemById(entry.getKey());
-            item.setQuantity(entry.getValue());
             if (item != null) {
-                for (int i = 0; i < entry.getValue(); i++) {
-                    itemsToBuy.add(item);
-                }
+                item.setQuantity(entry.getValue());
+                itemsToBuy.add(item);
                 totalCost += item.getPrice() * entry.getValue();
             }
         }
@@ -257,7 +267,7 @@ public class ShopActivity extends AppCompatActivity {
             return;
         }
 
-        int currentUserId = prefs.getInt("userId", -1);
+        int currentUserId = getUserIdSafely();
         if (currentUserId == -1) {
             Toast.makeText(this, "Error: You are not logged in.", Toast.LENGTH_SHORT).show();
             return;
@@ -305,5 +315,24 @@ public class ShopActivity extends AppCompatActivity {
         });
     }
 
-
+    private int getUserIdSafely() {
+        int userId = -1;
+        try {
+            userId = prefs.getInt("userId", -1);
+        } catch (ClassCastException e) {
+            String legacyUserId = prefs.getString("userId", null);
+            if (legacyUserId != null) {
+                try {
+                    userId = Integer.parseInt(legacyUserId);
+                    // Update to new format
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putInt("userId", userId);
+                    editor.apply();
+                } catch (NumberFormatException nfe) {
+                    // Ignored
+                }
+            }
+        }
+        return userId;
+    }
 }

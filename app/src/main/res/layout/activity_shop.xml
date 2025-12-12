@@ -5,36 +5,37 @@
     android:background="#f2f2f2">
 
     <!-- HEADER -->
+
+    <!-- TOP BAR: coins + cart + logout -->
     <LinearLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
+        android:background="@android:color/transparent"
         android:gravity="center"
-        android:background="@android:color/transparent">
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="🛒 EETAC BROS SHOP 🛒"
-            android:textStyle="bold"
-            android:textSize="20sp"
             android:textColor="#000"
-            android:gravity="center"/>
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="¡Buy items for your adventure!"
             android:textColor="#444"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp"/>
+            android:textSize="14sp" />
     </LinearLayout>
 
-    <!-- TOP BAR: coins + cart + logout -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
@@ -72,7 +73,7 @@
         <!-- Cart -->
         <RelativeLayout
             android:id="@+id/cartIcon"
-            android:layout_width="5dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center">
@@ -97,26 +98,28 @@
         <!-- Logout -->
         <Button
             android:id="@+id/logoutBtn"
-            android:layout_width="4dp"
+            android:layout_width="0dp"
             android:layout_height="32dp"
             android:layout_weight="1"
             android:background="#cc0000"
             android:text="Log Out"
             android:textColor="#fff" />
+
     </LinearLayout>
 
     <!-- PRODUCTS LIST -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/topBar">
+        android:layout_height="513dp"
+        android:layout_below="@id/topBar"
+        android:layout_marginTop="63dp">
 
         <LinearLayout
             android:id="@+id/productsGrid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
             <!-- Product cards will be inserted dynamically -->
         </LinearLayout>
     </ScrollView>
@@ -219,7 +222,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="🗑️ Empty Cart"
-                    android:background="#f0ad4e"
+                    android.background="#f0ad4e"
                     android:textColor="#fff"/>
 
                 <View
@@ -238,5 +241,17 @@
 
         </LinearLayout>
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/profileBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="16dp"
+        android:background="#007bff"
+        android:text="Profile"
+        android:textColor="#fff" />
 
 </RelativeLayout>

@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         prefs = getSharedPreferences("EETACBROSPreferences", MODE_PRIVATE);
 
         if (prefs.getBoolean("isLoggedIn", false)) {
-            goToShop();
+            goToProfile();
             return;
         }
 
@@ -68,10 +68,11 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("password", user.password);
                         editor.putInt("coins", user.coins);
                     }
+                    editor.putBoolean("isLoggedIn", true);
                     editor.commit();
 
                     Toast.makeText(LoginActivity.this, "✅ Login successful! Redirecting...", Toast.LENGTH_SHORT).show();
-                    goToShop();
+                    goToProfile();
                 }
                 else if (response.code() == 404){
                     Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
@@ -93,8 +94,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void goToShop() {
-        Intent intent = new Intent(LoginActivity.this, ShopActivity.class);
+    private void goToProfile() {
+        Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

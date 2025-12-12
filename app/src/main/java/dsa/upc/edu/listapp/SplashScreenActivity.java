@@ -7,13 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-
 public class SplashScreenActivity extends AppCompatActivity {
 
-
     private SharedPreferences prefs;
-    //private boolean isLoggedIn;
-    private Integer userId;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,34 +18,47 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         prefs = getSharedPreferences("EETACBROSPreferences", MODE_PRIVATE);
-        userId = prefs.getInt("userId",-1);
+        userId = getUserIdSafely();
+
         if (userId != -1) {
             Toast.makeText(SplashScreenActivity.this, "Already logged in", Toast.LENGTH_SHORT).show();
         }
 
-        // Seria conveniende guardar la contraseña y el nombre de usuario o solamenet el id
-        // del usuario en las SharedPreferences para que asi durante el SplashScreen se loguee
-        // automaticamente. Si no se ha podido loguearse con exito entonces le mandamos a la actividad
-        // de login.
-
         final Handler handler = new Handler();
-        handler.postDelayed(() ->
-                {
-                    Intent intent = null;
-                    if (userId != -1) {
-                        goToShop();
-                    }
-                    else {
-                        intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                    }
-                },
-                3000);
+        handler.postDelayed(() -> {
+            if (userId != -1) {
+                goToProfile();
+            } else {
+                Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        }, 3000);
     }
 
-    private void goToShop() {
-        Intent intent = new Intent(SplashScreenActivity.this, ShopActivity.class);
+    private int getUserIdSafely() {
+        int userId = -1;
+        try {
+            userId = prefs.getInt("userId", -1);
+        } catch (ClassCastException e) {
+            String legacyUserId = prefs.getString("userId", null);
+            if (legacyUserId != null) {
+                try {
+                    userId = Integer.parseInt(legacyUserId);
+                    // Update to new format
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putInt("userId", userId);
+                    editor.apply();
+                } catch (NumberFormatException nfe) {
+                    // Ignored
+                }
+            }
+        }
+        return userId;
+    }
+
+    private void goToProfile() {
+        Intent intent = new Intent(SplashScreenActivity.this, ProfileActivity.class);
         startActivity(intent);
+        finish();
     }
-
 }

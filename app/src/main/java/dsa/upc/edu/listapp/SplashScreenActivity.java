@@ -27,11 +27,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         final Handler handler = new Handler();
         handler.postDelayed(() -> {
             if (userId != -1) {
-                goToProfile();
+                startActivity(new Intent(SplashScreenActivity.this, GroupActivity.class));
             } else {
-                Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(SplashScreenActivity.this, GroupActivity.class));
             }
+            finish();
+
         }, 3000);
     }
 

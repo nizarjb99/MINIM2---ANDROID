@@ -30,4 +30,12 @@ public interface EETACBROSSystemService {
     @DELETE("eetacbros/user/delete/{id}")
     Call<Void> deleteUser(@Path("id") int id);
 
+    @GET("eetacbros/groups")
+
+    Call<List<Group>> getGroups();
+
+    @POST("eetacbros/groups/{id}/join")
+    Call<Void> joinGroup(@Path("id") int groupId, @Body JoinGroupRequest body);
+
+
 }

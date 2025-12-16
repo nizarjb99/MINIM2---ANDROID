@@ -56,11 +56,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.itemName.setText(name);
         holder.itemIcon.setText(item.getEmoji());
         holder.itemQuantity.setText("x" + item.getQuantity());
+
     }
 
     @Override
     public int getItemCount() {
         if (values == null) return 0;
         return values.size();
+
     }
 }
